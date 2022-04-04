@@ -1,8 +1,6 @@
 <script>
     export let tax_info
 
-    // let showSummary = false
-
     const toCurrency = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -10,149 +8,267 @@
     })
 
     const Calculate = () => {
+        let percentPreTax = (tax_info.TSA / tax_info.grossIncome) * 100
 
+        document.getElementsByName("gross-inc")[0].textContent = toCurrency.format(tax_info.grossIncome)
+        document.getElementsByName("filling-status")[0].textContent = GetFilingStatus()
+        document.getElementsByName("filing-status-deduction")[0].textContent = toCurrency.format(tax_info.filingStatusDeduction)
+        document.getElementsByName("sect-125")[0].textContent = toCurrency.format(tax_info.sect125)
+        document.getElementsByName("tsa-cont")[0].textContent = toCurrency.format(tax_info.TSA)
+        document.getElementsByName("percent-pre-tax")[0].textContent = percentPreTax.toFixed(2)
+        document.getElementsByName("standard-deduction")[0].textContent = toCurrency.format(GetStandardDeduction())
+        document.getElementsByName("over65deduction")[0].textContent = toCurrency.format(GetOver65Deduction())
+        document.getElementsByName("net-taxible")[0].textContent = toCurrency.format(GetTaxableIncome())
+        document.getElementsByName("withholding-tax")[0].textContent = toCurrency.format(tax_info.WithHolding_tax)
+        document.getElementsByName("FICA")[0].textContent = toCurrency.format(GetFICA())
+        document.getElementsByName("MISC")[0].textContent = toCurrency.format(tax_info.Misc)
+        document.getElementsByName("non-tsa-savings")[0].textContent = toCurrency.format(tax_info.NonTSA)
+        document.getElementsByName("net-take-home")[0].textContent = toCurrency.format(GetNetTakeHomePay())
 
-        let percentPreTax = tax_info.grossIncome / tax_info.TSA
-
+        document.getElementById("tax-summary").removeAttribute("hidden")
+    }
+    const GetTaxableIncome = () =>{
         let NetTaxableInc = tax_info.grossIncome -
             tax_info.TSA -
             tax_info.sect125
+        NetTaxableInc -= GetStandardDeduction()
+        if (tax_info.over65dedution)
+        {
+            NetTaxableInc -= 1700
+        }
+        return NetTaxableInc
+    }
+    const GetFilingStatus =() =>{
+        let selectElement = document.querySelector('#filing-status');
+        let output = selectElement.options[selectElement.selectedIndex].value;
 
-        let NetTakeHomePay = tax_info.grossIncome -
+        switch (output) {
+            case 'singe':
+                return "Single"
+                break;
+            case 'married':
+            return "Married"
+                break;
+            case 'Married_s':
+            return "Married filing separately"
+                break;
+            case 'headofhousehold':
+            return "Head of Household"
+                break;
+            default:
+            return "Single"
+                break;
+        }
+    }
+    const GetStandardDeduction = () =>{
+        let selectElement = document.querySelector('#filing-status');
+        let output = selectElement.options[selectElement.selectedIndex].value;
+
+        switch (output) {
+            case 'singe':
+                tax_info.filingStatusDeduction = 12950
+                break;
+            case 'married':
+            tax_info.filingStatusDeduction = 25900
+                break;
+            case 'Married_s':
+            tax_info.filingStatusDeduction = 12950
+                break;
+            case 'headofhousehold':
+            tax_info.filingStatusDeduction = 19400
+                break;
+            default:
+            tax_info.filingStatusDeduction = 12950
+                break;
+        }
+        return tax_info.filingStatusDeduction
+    }
+    const GetOver65Deduction =() =>{
+        if(tax_info.over65dedution){
+            return 1700
+        }
+        else
+            return 0
+    }
+    const GetNetTakeHomePay = () => {
+        return tax_info.grossIncome -
             tax_info.TSA -
             tax_info.sect125 -
             tax_info.WithHolding_tax -
-            tax_info.FICA -
+            GetFICA() -
             tax_info.Misc -
-            tax_info.NonTSA
-
-            document.getElementsByName("gross-inc")[0].textContent = toCurrency.format(tax_info.grossIncome)
-            document.getElementsByName("filing-status-deduction")[0].textContent = toCurrency.format(tax_info.filingStatusDeduction)
-            document.getElementsByName("sect-125")[0].textContent = toCurrency.format(tax_info.sect125)
-            document.getElementsByName("tsa-cont")[0].textContent = toCurrency.format(tax_info.TSA)
-            document.getElementsByName("percent-pre-tax")[0].textContent = percentPreTax
-            document.getElementsByName("net-taxible")[0].textContent = toCurrency.format(NetTaxableInc)
-            document.getElementsByName("withholding-tax")[0].textContent = toCurrency.format(tax_info.WithHolding_tax)
-            document.getElementsByName("FICA")[0].textContent = toCurrency.format(tax_info.FICA)
-            document.getElementsByName("MISC")[0].textContent = toCurrency.format(tax_info.Misc)
-            document.getElementsByName("non-tsa-savings")[0].textContent = toCurrency.format(tax_info.NonTSA)
-            document.getElementsByName("net-take-home")[0].textContent = toCurrency.format(NetTakeHomePay)
-
-            document.getElementById("tax-summary").removeAttribute("hidden")
-            // ShowSummary(true)
+            tax_info.NonTSA -
+            tax_info.filingStatusDeduction
+    }
+    const GetFICA = () => {
+        return (tax_info.grossIncome - tax_info.sect125) * .0765
     }
 
-    // const ShowSummary = (show) => {
-    //     showSummary = show
-    // }
 </script>
 
 
 
 <div class="border-2">
-
-
-    <h2>Tax Summary</h2>
+    <h1>
+        <u>
+            Tax Summary
+        </u>
+    </h1>
 
     <div>
         <button
-        on:click={Calculate}
-        class="calculate-button">
-            Calculate
+            on:click={Calculate}
+            class="calculate-button">
+                Calculate
         </button>
     </div>
-    <div hidden id="tax-summary">
-        <h4>Income</h4>
-        <p>
-            Gross Income per Paycheck:
-            <span name = "gross-inc">
 
-            </span>
+    <div hidden id="tax-summary">
+        <h2>
+            Income
+        </h2>
+
+        <p>
+            Gross Income per Year:
+            <b>
+                <span name = "gross-inc">
+
+                </span>
+            </b>
         </p>
-        <h4>Filing Status</h4>
+
+        <h2>
+            Filing Status
+        </h2>
+
         <p>
             Filing Status:
-            <span name = "filing-status">
+            <b>
+                <span name = "filling-status">
 
-            </span>
+                </span>
+            </b>
         </p>
         <p>
-            Filing Status Deduction:
-            <span name = "filing-status-deduction">
+            Tax Owed:
+            <b>
+                <span name = "filing-status-deduction">
 
-            </span>
+                </span>
+            </b>
         </p>
         <p>
             Section 125:
-            <span name = "sect-125">
+            <b>
+                <span name = "sect-125">
 
-            </span>
+                </span>
+            </b>
         </p>
 
-        <h4>Pre-Tax Contributions </h4>
+        <h2>
+            Pre-Tax Contributions
+        </h2>
 
         <p>
             TSA Contribution:
-            <span name = "tsa-cont">
+            <b>
+                <span name = "tsa-cont">
 
-            </span>
+                </span>
+            </b>
         </p>
 
         <p>
             Contribution:
-            <span name = "percent-pre-tax">
+            <b>
+                <span name = "percent-pre-tax">
 
-            </span>
-            %
+                </span>
+                % <i>*rounded</i>
+            </b>
+        </p>
+
+        <p>
+            Standard Deduction:
+            <b>
+                <span name = "standard-deduction">
+
+                </span>
+            </b>
+        </p>
+
+        <p>
+            Over 65 deduction:
+            <b>
+                <span name = "over65deduction">
+
+                </span>
+            </b>
         </p>
 
         <p>
             Net Taxable:
-            <span name = "net-taxible">
+            <b>
+                <span name = "net-taxible">
 
-            </span>
+                </span>
+            </b>
         </p>
 
-        <h4>Withholding Taxes: </h4>
+        <h2>
+            Withholding Taxes:
+        </h2>
 
         <p>
             W/H Tax:
-            <span name = "withholding-tax">
+            <b>
+                <span name = "withholding-tax">
 
-            </span>
+                </span>
+            </b>
         </p>
 
         <p>
             FICA:
-            <span name = "FICA">
+            <b>
+                <span name = "FICA">
 
-            </span>
+                </span>
+            </b>
         </p>
 
         <p>
             MISC:
-            <span name = "MISC">
+            <b>
+                <span name = "MISC">
 
-            </span>
+                </span>
+            </b>
         </p>
 
         <p>
             Non-TSA Savings:
-            <span name = "non-tsa-savings">
+            <b>
+                <span name = "non-tsa-savings">
 
-            </span>
+                </span>
+            </b>
         </p>
 
-        <h4>Summary </h4>
+        <h2>
+            Summary
+        </h2>
 
         <p>
             Net Take-Home Pay:
-            <span name = "net-take-home">
+            <b>
+                <span name = "net-take-home">
 
-            </span>
+                </span>
+            </b>
         </p>
     </div>
-
 </div>
 
 <style>
