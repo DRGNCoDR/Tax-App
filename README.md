@@ -1,9 +1,4 @@
-Svelte-Template
+Tax App v. 0.0.3
 
-In terminal
-Run "yarn install" (to add node_modules.)
-
-If yarn isn't installed
-Run "npm i yarn -g" (i for install, -g for install globaly)
-
+Objective: Develop an application to replace existing tax workflow.
 
