@@ -1,31 +1,19 @@
 <script>
     import TaxInfo  from "./comp/tax-info.svelte";
 </script>
-
-
     <h1>
-        Anthony App ALPHA v 0.0.2
+        Anthony App ALPHA v 0.0.3
     </h1>
     <div class="app-container">
         <div id="app-taxinfo">
             <TaxInfo/>
         </div>
-
-
-            <iframe
-                src="../src/tax-table/i1040tt.pdf"
-                title="W3Schools Free Online Web Tutorials"
-                id="tax-table">
-            </iframe>
-
+        <iframe
+            src="../src/tax-table/i1040tt.pdf"
+            title="2021 Tax Table"
+            class="tax-table"
+        />
     </div>
-
-
-    <div style="display:flex; display:none;">
-        <TaxInfo/>
-    </div>
-
-
 
 <style>
     .app-container{
@@ -34,10 +22,11 @@
         justify-content: space-around;
         padding: 10px;
     }
-    #tax-table{
+    .tax-table{
         flex-grow: 1;
-         border: none;
-         margin: 0;
-          padding: 10px;
+        border: none;
+        margin: 0;
+        padding: 10px;
     }
+
 </style>
