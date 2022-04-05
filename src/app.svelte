@@ -2,7 +2,7 @@
     import TaxInfo  from "./comp/tax-info.svelte";
 </script>
     <h1>
-        Anthony App ALPHA v 0.0.3
+        Anthony App ALPHA v3
     </h1>
     <div class="app-container">
         <div id="app-taxinfo">
