@@ -12,7 +12,7 @@
 
         document.getElementsByName("gross-inc")[0].textContent = toCurrency.format(tax_info.grossIncome)
         document.getElementsByName("filling-status")[0].textContent = GetFilingStatus()
-        document.getElementsByName("filing-status-deduction")[0].textContent = toCurrency.format(tax_info.filingStatusDeduction)
+        document.getElementsByName("AGI-tax")[0].textContent = toCurrency.format(tax_info.AGITax)
         document.getElementsByName("sect-125")[0].textContent = toCurrency.format(tax_info.sect125)
         document.getElementsByName("tsa-cont")[0].textContent = toCurrency.format(tax_info.TSA)
         document.getElementsByName("percent-pre-tax")[0].textContent = percentPreTax.toFixed(2)
@@ -26,16 +26,16 @@
         document.getElementsByName("net-take-home")[0].textContent = toCurrency.format(GetNetTakeHomePay())
 
         document.getElementById("tax-summary").removeAttribute("hidden")
+        document.getElementById("tax-summary-title").removeAttribute("hidden")
     }
     const GetTaxableIncome = () =>{
-        let NetTaxableInc = tax_info.grossIncome -
+        let NetTaxableInc =
+            tax_info.grossIncome -
             tax_info.TSA -
-            tax_info.sect125
-        NetTaxableInc -= GetStandardDeduction()
-        if (tax_info.over65dedution)
-        {
-            NetTaxableInc -= 1700
-        }
+            tax_info.sect125 -
+            GetStandardDeduction() -
+            GetOver65Deduction()
+
         return NetTaxableInc
     }
     const GetFilingStatus =() =>{
@@ -64,22 +64,28 @@
         let selectElement = document.querySelector('#filing-status');
         let output = selectElement.options[selectElement.selectedIndex].value;
 
-        switch (output) {
+        if(!tax_info.isScheduleADeduction){
+            switch (output) {
             case 'singe':
                 tax_info.filingStatusDeduction = 12950
                 break;
             case 'married':
-            tax_info.filingStatusDeduction = 25900
+                tax_info.filingStatusDeduction = 25900
                 break;
             case 'Married_s':
-            tax_info.filingStatusDeduction = 12950
+                tax_info.filingStatusDeduction = 12950
                 break;
             case 'headofhousehold':
-            tax_info.filingStatusDeduction = 19400
+                tax_info.filingStatusDeduction = 19400
                 break;
             default:
-            tax_info.filingStatusDeduction = 12950
+                tax_info.filingStatusDeduction = 12950
                 break;
+            }
+        }
+
+        if(tax_info.isScheduleADedution){
+            tax_info.filingStatusDeduction = tax_info.scheduleADedution
         }
         return tax_info.filingStatusDeduction
     }
@@ -92,13 +98,13 @@
     }
     const GetNetTakeHomePay = () => {
         return tax_info.grossIncome -
+            tax_info.AGITax -
             tax_info.TSA -
             tax_info.sect125 -
             tax_info.WithHolding_tax -
             GetFICA() -
             tax_info.Misc -
-            tax_info.NonTSA -
-            tax_info.filingStatusDeduction
+            tax_info.NonTSA
     }
     const GetFICA = () => {
         return (tax_info.grossIncome - tax_info.sect125) * .0765
@@ -109,11 +115,14 @@
 
 
 <div class="border-2">
-    <h1>
-        <u>
-            Tax Summary
-        </u>
-    </h1>
+    <div hidden id="tax-summary-title">
+        <h1>
+            <u>
+                Tax Summary
+            </u>
+        </h1>
+    </div>
+
 
     <div>
         <button
@@ -152,7 +161,7 @@
         <p>
             Tax Owed:
             <b>
-                <span name = "filing-status-deduction">
+                <span name = "AGI-tax">
 
                 </span>
             </b>
