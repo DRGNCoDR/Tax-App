@@ -17,7 +17,10 @@
         Misc: 0.00,
         NonTSA: 0.00,
         NetTakeHome: 0.00,
-        over65dedution: 0.00
+        over65dedution: 0.00,
+        isScheduleADedution: false,
+        scheduleADedution: 0.00,
+        AGITax: 0.00
     }
 
     const GetAGI = () =>{
@@ -31,14 +34,6 @@
     }
 </script>
 
-<!-- <div>
-    <p>Select the variation you want to edit:</p>
-    {#each variations as variation}
-        <input type="radio" value={variation} name="variations"> {variation}
-    {/each}
-</div>
-<br>-->
-
 <div class="tax-info" style="display: flex;">
     <div class="border-2">
         <h1>
@@ -47,35 +42,34 @@
             </u>
         </h1>
 
-        <div class = "border-2">
-            <label for="GrossInc">
-                Gross Income:
+    <div class = "border-2">
+        <label for="GrossInc">
+            Gross Income /yr:
+        </label>
+
+        <input
+            type="number"
+            bind:value="{tax_info.grossIncome}"/>
+        <h2>
+            Pre-Tax Contributions
+        </h2>
+
+        <div>
+            <label for="Sect125">
+                Sect 125:
             </label>
 
             <input
                 type="number"
-                bind:value="{tax_info.grossIncome}">
-            <h2>
-                Pre-Tax Contributions
-            </h2>
+                bind:value="{tax_info.sect125}"/>
 
-            <div>
-                <label for="Sect125">
-                    Sect 125:
-                </label>
-
-                <input
-                    type="number"
-                    bind:value="{tax_info.sect125}"/>
-
-            </div>
+        </div>
         <div>
             <label for="TSA">
                 TSA:
             </label>
 
-            <input type="number"  bind:value="{tax_info.TSA}"/>
-
+            <input type="number" bind:value="{tax_info.TSA}"/>
         </div>
 
         <div>
@@ -105,15 +99,22 @@
             <option value="Married_s">Married filing separatly</option>
             <option value="headofhousehold">Head of Houshold</option>
         </select>
-
         <div>
-            <label for="Sect125">
+            Use Schedule A
+            <input
+                class="isScheduleA"
+                type="checkbox"
+                bind:checked="{tax_info.isScheduleADedution}"/>
+            <input type="number" bind:value="{tax_info.scheduleADedution}"/>
+        </div>
+        <div>
+            <label for="AGI-tax">
                 Search Tax Table for AGI:
             </label>
 
             <input
                 type="number"
-                bind:value="{tax_info.filingStatusDeduction}"/>
+                bind:value="{tax_info.AGITax}"/>
         </div>
 
         <div>
@@ -121,7 +122,7 @@
             <input
                 class="is65orover"
                 type="checkbox"
-                bind:checked="{tax_info.over65dedution}">
+                bind:checked="{tax_info.over65dedution}"/>
         </div>
 
         <h2>
