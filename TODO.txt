@@ -1,0 +1,3 @@
+If trying to calculate a null number make it 0 ( Prevent NaN in summary)
+FIx Layout
+Add popup for the tax tables.

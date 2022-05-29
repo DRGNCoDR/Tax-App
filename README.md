@@ -1,4 +1,4 @@
-Tax App v. 0.0.3
+Tax App
 
-Objective: Develop an application to replace existing tax workflow.
+A freelance application developed to  track and project different tax scenarios
 
