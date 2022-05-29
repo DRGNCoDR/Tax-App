@@ -6,7 +6,7 @@ import html from "@rollup/plugin-html"
 const template = (options) => `<!doctype html>
 <html>
     <head>
-        <title>Test Title</title>
+        <title>Tax App</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width" />
     </head>
@@ -22,6 +22,7 @@ export default {
   output: {
     file: `builds/app-d${Date.now()}.js`,
     format: "iife",
+    name: "app"
   },
   plugins: [
     del({
@@ -31,8 +32,8 @@ export default {
         ]
     }),
     svelte({
-      emitCss: false,
-    }),
+        emitCss: false,
+      }),
     resolve(),
     html({
         template,

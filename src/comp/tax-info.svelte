@@ -1,12 +1,7 @@
 <script>
     import TaxSummary from "./tax-summary.svelte"
 
-    // let variations = ["Original","1","2"];
-    const toCurrency = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2
-    })
+    export let selectedVariation = ""
 
     let tax_info = {
         grossIncome: 0.00,
@@ -18,12 +13,19 @@
         NonTSA: 0.00,
         NetTakeHome: 0.00,
         over65dedution: 0.00,
-        isScheduleADedution: false,
-        scheduleADedution: 0.00,
+        isScheduleADeduction: false,
+        scheduleADeduction: 0.00,
         AGITax: 0.00
     }
 
-    const GetAGI = () =>{
+    const toCurrency = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        })
+
+
+        const GetAGI = () =>{
         return toCurrency.format(tax_info.grossIncome -
             tax_info.TSA -
             tax_info.sect125)
@@ -33,8 +35,8 @@
         document.querySelector(".AGI").textContent = GetAGI()
     }
 </script>
-
-<div class="tax-info" style="display: flex;">
+<h3>Currently editing: {selectedVariation}</h3>
+<div class="tax-info">
     <div class="border-2">
         <h1>
             <u>
@@ -104,8 +106,8 @@
             <input
                 class="isScheduleA"
                 type="checkbox"
-                bind:checked="{tax_info.isScheduleADedution}"/>
-            <input type="number" bind:value="{tax_info.scheduleADedution}"/>
+                bind:checked="{tax_info.isScheduleADeduction}"/>
+            <input type="number" bind:value="{tax_info.scheduleADeduction}"/>
         </div>
         <div>
             <label for="AGI-tax">
