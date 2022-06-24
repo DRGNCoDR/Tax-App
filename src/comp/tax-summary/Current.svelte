@@ -110,17 +110,17 @@
 
 <div id="tax-summary-current" class="tax-summary-current border-2">
     <div  id="tax-summary-title">
-        <h1>
+        <h2>
             <u>
                 Current Tax Summary
             </u>
-        </h1>
+        </h2>
     </div>
 
     <div>
-        <h2>
+        <h3>
             Income
-        </h2>
+        </h3>
 
         <p>
             Gross Income per Year:
@@ -131,9 +131,9 @@
             </b>
         </p>
 
-        <h2>
+        <h3>
             Filing Status
-        </h2>
+        </h3>
 
         <p>
             Filing Status:
@@ -160,15 +160,24 @@
             </b>
         </p>
 
-        <h2>
+        <h3>
             Pre-Tax Contributions
-        </h2>
+        </h3>
 
         <p>
             TSA Contribution:
             <b>
                 <span name = "tsa-cont">
                     {toCurrency.format($current_tax_info[0].TSA)}
+                </span>
+            </b>
+        </p>
+
+        <p>
+            Non-TSA Savings:
+            <b>
+                <span name = "non-tsa-savings">
+                    {toCurrency.format($current_tax_info[0].NonTSASavings)}
                 </span>
             </b>
         </p>
@@ -210,6 +219,14 @@
                 </span>
             </b>
         </p>
+        <p>
+            Age 65:
+            <b>
+                <span name = "Age65">
+                    {$current_tax_info[0].Age65}
+                </span>
+            </b>
+        </p>
 
         <p>
             Net Taxable:
@@ -220,9 +237,9 @@
             </b>
         </p>
 
-        <h2>
+        <h3>
             Withholding Taxes:
-        </h2>
+        </h3>
 
         <p>
             W/H Tax:
@@ -251,18 +268,9 @@
             </b>
         </p>
 
-        <p>
-            Non-TSA Savings:
-            <b>
-                <span name = "non-tsa-savings">
-                    {toCurrency.format($current_tax_info[0].NonTSASavings)}
-                </span>
-            </b>
-        </p>
-
-        <h2>
+        <h3>
             Summary
-        </h2>
+        </h3>
 
         <p>
             Net Take-Home Pay:
@@ -272,17 +280,37 @@
                 </span>
             </b>
         </p>
+        <p>
+            Projected Refund:
+            <b>
+                <span name = "proj-refund">
+                    {toCurrency.format($current_tax_info[0].ProjTaxRefund)}
+                </span>
+            </b>
+        </p>
     </div>
 </div>
 
 <style>
     .tax-summary-current{
         text-align: center;
-        width: 25%;
+        width: 22%;
         float:left;
+        margin-top: 5px;
     }
     .border-2{
         border: 2px solid black;
         padding: 10px;
+        background: gray;
+        opacity: 0.9;
+        color: white;
+    }
+    @media print{
+        .tax-summary-current{
+        text-align: center;
+        width: 29%;
+        float:left;
+        margin: 1px;
+        }
     }
 </style>

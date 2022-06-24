@@ -29,11 +29,12 @@
         100
 </script>
 
-<h1>
+<h2>
     Combined Summary
-</h1>
-<div class="combined-container">
-    <div class="combined-current">
+</h2>
+
+<div class="combined-container" style="background-color: lightgray; border: 2px solid black">
+    <div class="combined-current" style="background-color: gray;">
         <h4>
             <u>
                 Current
@@ -60,43 +61,48 @@
             <div class="current-summary">
                 <p>Annual Tax Savings: {toCurrency.format(item.NetTakeHomePay)}</p>
                 <p>Proj. Savings @ Curr. Int. Rate: {item.PercentPreTax.toFixed(2)}%</p>
-                <p>5 year: {toCurrency.format(item.NetTakeHomePay * 5)}</p>
-                <p>50 year: {toCurrency.format(item.NetTakeHomePay * 10) }</p>
-                <p>20 year: {toCurrency.format(item.NetTakeHomePay * 20) } </p>
-                <p>Age 65: ??</p>
+                <p>Proj. Tax Refund: {toCurrency.format(item.ProjTaxRefund)}</p>
+                <p>5 year: {toCurrency.format(item.TSA * 5)}</p>
+                <p>10 year: {toCurrency.format(item.TSA * 10) }</p>
+                <p>15 year: {toCurrency.format(item.TSA * 15) } </p>
+                <p>20 year: {toCurrency.format(item.TSA * 20) } </p>
+                <p>Age 65: {item.Age65}</p>
             </div>
         {/each}
     </div>
-    <div class="combined-projected1">
+    <div class="combined-projected1" style="background-color: lightblue;">
         <h4>Projected 1</h4>
         {#each $projected1_tax_info as item}
 
             <div class="projected1-vs-current">
                 <p>Annual Tax Savings: {toCurrency.format(item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay)}</p>
-                <p>Proj. Savings @ Curr. Int. Rate: {(item.PercentPreTax - $current_tax_info[0].PercentPreTax).toFixed(2)}%</p>
-                <p>5 year: {toCurrency.format((item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay) * 5)}</p>
-                <p>50 year: {toCurrency.format((item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay) * 10)}</p>
-                <p>20 year: {toCurrency.format((item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay) * 20)} </p>
-                <p>Age 65: ??</p>
+                <p>Savings @ Curr. Int. Rate: {(item.PercentPreTax - $current_tax_info[0].PercentPreTax).toFixed(2)}%</p>
+                <p>Proj. Tax Refund: {toCurrency.format(item.ProjTaxRefund)}</p>
+                <p>5 year: {toCurrency.format(item.TSA * 5)}</p>
+                <p>10 year: {toCurrency.format(item.TSA * 10) }</p>
+                <p>15 year: {toCurrency.format(item.TSA * 15) } </p>
+                <p>20 year: {toCurrency.format(item.TSA * 20) } </p>
+                <p>Age 65: {item.Age65}</p>
             </div>
         {/each}
     </div>
-    <div class="combined-projected2">
+    <div class="combined-projected2" style="background-color: lightcoral;">
         <h4>Projected 2</h4>
         {#each $projected2_tax_info as item}
 
             <div class="projected2-vs-current">
                 <p>Annual Tax Savings: {toCurrency.format(item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay)}</p>
-                <p>Proj. Savings @ Curr. Int. Rate: {(item.PercentPreTax - $current_tax_info[0].PercentPreTax).toFixed(2)}%</p>
-                <p>5 year: {toCurrency.format((item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay) * 5)}</p>
-                <p>50 year: {toCurrency.format((item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay) * 10)}</p>
-                <p>20 year: {toCurrency.format((item.NetTakeHomePay - $current_tax_info[0].NetTakeHomePay) * 20)} </p>
-                <p>Age 65: ??</p>
+                <p>Savings @ Curr. Int. Rate: {(item.PercentPreTax - $current_tax_info[0].PercentPreTax).toFixed(2)}%</p>
+                <p>Proj. Tax Refund: {toCurrency.format(item.ProjTaxRefund)}</p>
+                <p>5 year: {toCurrency.format(item.TSA * 5)}</p>
+                <p>10 year: {toCurrency.format(item.TSA * 10) }</p>
+                <p>15 year: {toCurrency.format(item.TSA * 15) } </p>
+                <p>20 year: {toCurrency.format(item.TSA * 20) } </p>
+                <p>Age 65: {item.Age65}</p>
             </div>
         {/each}
     </div>
 </div>
-
 <style>
     .combined-container{
         background-color: gray;
@@ -104,20 +110,50 @@
         padding: 10px;
         text-align: center;
         display: flex;
+        padding: 5px;
     }
     .combined-current{
         border-right: 1px solid black;
         margin: 0px 10px;
         padding: 0px 10px;
+        width: 28%;
     }
     .combined-projected1{
         border-right: 1px solid black;
         margin: 0px 10px;
         padding: 0px 10px;
+        width: 28%;
     }
     .combined-projected2{
         border-right: 1px solid black;
         margin: 0px 10px;
         padding: 0px 10px;
+        width:28%;
+    }
+    @media print{
+    .combined-container{
+        opacity: .9;
+    }
+    .combined-current{
+        border-right: 1px solid black;
+        margin: 0px 10px;
+        padding: 0px 10px;
+        width:30%;
+        opacity: .9;
+    }
+    .combined-projected1{
+        border-right: 1px solid black;
+        margin: 0px 10px;
+        padding: 0px 10px;
+        width:30%;
+        opacity: .9;
+    }
+    .combined-projected2{
+        border-right: 1px solid black;
+        margin: 0px 10px;
+        padding: 0px 10px;
+        width:30%;
+        opacity: .9;
+    }
     }
 </style>

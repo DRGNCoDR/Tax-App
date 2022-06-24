@@ -1,3 +1,31 @@
 If trying to calculate a null number make it 0 ( Prevent NaN in summary)
 FIx Layout
 Add popup for the tax tables.
+
+Anthony App
+
+x change search tax table table to "search tax owed"
+
+Name Date
+Payroll deduction will begin
+Steps you must handle (2 lines)
+
+x Print button on top,
+x Email button on top
+
+x disclosure file1
+x disclosure software (Tampa Bay financial group)
+
+x logo as a shadow in the background or top (if cant read text put top left)
+
+Hide summarys/combined summary when showing email form
+
+Next meeting question, Earned Income Credit tables implementation.
+
+6/22/2022
+
+_ Fix Calculations
+
+_ Add Eligible Tax Credits under W/H Tax
+
+_ Get other Tax tables from Anthony

@@ -27,6 +27,10 @@
         document.querySelector(".AGI").textContent = AGI
     }
     const LoadSummary = () => {
+        $current_tax_info[0].ProjTaxRefund =
+            $current_tax_info[0].AGITax -
+            $current_tax_info[0].WithHoldingTax //- tax credits
+
         if(document.getElementById("tax-summary-current") == null)
         {
             const app = new TaxSummary({
@@ -55,11 +59,11 @@
 >
     {#each $current_tax_info as current_tax_info}
         <div class="border-2">
-            <h1>
+            <h2>
                 <u>
                 Current Tax Information
                 </u>
-            </h1>
+            </h2>
 
             <div >
                 <label for="GrossInc">
@@ -70,9 +74,9 @@
                     type="number"
                     bind:value="{current_tax_info.grossIncome}"/>
 
-                <h2>
+                <h3>
                     Pre-Tax Contributions
-                </h2>
+                </h3>
 
                 <div>
                     <label for="Sect125">
@@ -96,7 +100,14 @@
                     />
 
                 </div>
-
+                <div>
+                    <label for="NonTSA">
+                        Non TSA:
+                    </label>
+                    <input
+                        type="number"
+                        bind:value="{current_tax_info.NonTSASavings}"/>
+                </div>
                 <div>
                     <br>
                     <button
@@ -120,9 +131,9 @@
                 </p>
             </div>
 
-            <h2>
+            <h3>
                 Filing Status
-            </h2>
+            </h3>
 
             <select name="filing-status" id="filing-status" >
                 <option value="single">Single</option>
@@ -147,7 +158,7 @@
 
             <div>
                 <label for="AGI-tax">
-                    Search Tax Table for AGI:
+                    Search Tax Owed:
                 </label>
 
                 <input
@@ -162,10 +173,15 @@
                     type="checkbox"
                     bind:checked="{current_tax_info.over65dedution}"/>
             </div>
-
-            <h2>
+            <div>
+                Age 65:
+                <input
+                type="number"
+                bind:value="{current_tax_info.Age65}"/>
+            </div>
+            <h3>
                 Witholding Taxes
-            </h2>
+            </h3>
 
             <div>
                 <label for="witholding">
@@ -187,12 +203,14 @@
             </div>
 
             <div>
-                <label for="NonTSA">
-                    Non TSA:
+                <label for="CurrentTaxRefund">
+                    Proj Tax Refund:
                 </label>
                 <input
                     type="number"
-                    bind:value="{current_tax_info.NonTSASavings}"/>
+                    class="CurrentTaxRefund"
+                    bind:value="{current_tax_info.ProjTaxRefund}"
+                    disabled>
             </div>
         </div>
     {/each}
@@ -212,10 +230,14 @@
         width:25%;
         text-align: center;
         float: left;
+        padding: 5px;
     }
     .border-2{
         border: 2px solid black;
         padding: 10px;
+        background: gray;
+        opacity: 0.9;
+        color: white;
     }
     .calculate-agi{
         width: 100%;

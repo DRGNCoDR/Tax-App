@@ -10,9 +10,7 @@
     export let selectedVariation
 </script>
 <div
-    class="load-tax-form"
->
-    <h1>Tax Form</h1>
+    class="load-tax-form">
     {#if selectedVariation == "Current"}
         <Current {current_tax_info}/>
     {:else if selectedVariation == "Projected 1"}
@@ -21,4 +19,10 @@
         <Proj2 {projected2_tax_info}/>
     {/if}
 </div>
-
+<style>
+    @media print{
+        .load-tax-form{
+            display:none;
+        }
+    }
+</style>

@@ -108,17 +108,17 @@ const GetFICA = () => {
 
 <div id="tax-summary-projected1" class="tax-summary-projected1 border-2">
     <div  id="tax-summary-title">
-        <h1>
+        <h2>
             <u>
                 Projected 1 Tax Summary
             </u>
-        </h1>
+        </h2>
     </div>
 
     <div  id="tax-summary">
-        <h2>
+        <h3>
             Income
-        </h2>
+        </h3>
 
         <p>
             Gross Income per Year:
@@ -129,9 +129,9 @@ const GetFICA = () => {
             </b>
         </p>
 
-        <h2>
+        <h3>
             Filing Status
-        </h2>
+        </h3>
 
         <p>
             Filing Status:
@@ -158,9 +158,9 @@ const GetFICA = () => {
             </b>
         </p>
 
-        <h2>
+        <h3>
             Pre-Tax Contributions
-        </h2>
+        </h3>
 
         <p>
             TSA Contribution:
@@ -170,7 +170,14 @@ const GetFICA = () => {
                 </span>
             </b>
         </p>
-
+        <p>
+            Non-TSA Savings:
+            <b>
+                <span name = "non-tsa-savings">
+                    {toCurrency.format($projected1_tax_info[0].NonTSASavings)}
+                </span>
+            </b>
+        </p>
         <p>
             Contribution:
             <b>
@@ -218,9 +225,9 @@ const GetFICA = () => {
             </b>
         </p>
 
-        <h2>
+        <h3>
             Withholding Taxes:
-        </h2>
+        </h3>
 
         <p>
             W/H Tax:
@@ -250,17 +257,17 @@ const GetFICA = () => {
         </p>
 
         <p>
-            Non-TSA Savings:
+            Age 65:
             <b>
-                <span name = "non-tsa-savings">
-                    {toCurrency.format($projected1_tax_info[0].NonTSASavings)}
+                <span name = "Age65">
+                    {toCurrency.format($projected1_tax_info[0].Age65)}
                 </span>
             </b>
         </p>
 
-        <h2>
+        <h3>
             Summary
-        </h2>
+        </h3>
 
         <p>
             Net Take-Home Pay:
@@ -270,17 +277,37 @@ const GetFICA = () => {
                 </span>
             </b>
         </p>
+        <p>
+            Projected Refund:
+            <b>
+                <span name = "proj-refund">
+                    {toCurrency.format($projected1_tax_info[0].ProjTaxRefund)}
+                </span>
+            </b>
+        </p>
     </div>
 </div>
 
 <style>
     .tax-summary-projected1{
         text-align: center;
-        width: 20%;
+        width: 22%;
         float:left;
+        margin-top: 5px;
     }
     .border-2{
         border: 2px solid black;
         padding: 10px;
+        background: lightblue;
+        opacity: 0.9;
+        color: white;
+    }
+    @media print{
+        .tax-summary-projected1{
+            text-align: center;
+            width: 29%;
+            float:left;
+            margin: 1px;
+        }
     }
 </style>

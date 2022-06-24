@@ -27,6 +27,10 @@
         document.querySelector(".AGI").textContent = AGI
     }
     const LoadSummary = () => {
+        $projected1_tax_info[0].ProjTaxRefund =
+            $projected1_tax_info[0].AGITax -
+            $projected1_tax_info[0].WithHoldingTax //- tax credits
+
         if(document.getElementById("tax-summary-projected1") == null)
         {
             const app = new TaxSummary({
@@ -54,11 +58,11 @@
 >
     {#each $projected1_tax_info as projected1_tax_info}
         <div class="border-2">
-            <h1>
+            <h2>
                 <u>
                 Projected 1 Tax Information
                 </u>
-            </h1>
+            </h2>
 
             <div >
                 <label for="GrossInc">
@@ -69,9 +73,9 @@
                     type="number"
                     bind:value="{projected1_tax_info.grossIncome}"/>
 
-                <h2>
+                <h3>
                     Pre-Tax Contributions
-                </h2>
+                </h3>
 
                 <div>
                     <label for="Sect125">
@@ -94,6 +98,14 @@
                         bind:value="{projected1_tax_info.TSA}"
                     />
 
+                </div>
+                <div>
+                    <label for="NonTSA">
+                        Non TSA:
+                    </label>
+                    <input
+                        type="number"
+                        bind:value="{projected1_tax_info.NonTSASavings}"/>
                 </div>
 
                 <div>
@@ -119,9 +131,9 @@
                 </p>
             </div>
 
-            <h2>
+            <h3>
                 Filing Status
-            </h2>
+            </h3>
 
             <select name="filing-status" id="filing-status" >
                 <option value="single">Single</option>
@@ -146,7 +158,7 @@
 
             <div>
                 <label for="AGI-tax">
-                    Search Tax Table for AGI:
+                    Search Tax Owed:
                 </label>
 
                 <input
@@ -161,10 +173,15 @@
                     type="checkbox"
                     bind:checked="{projected1_tax_info.over65dedution}"/>
             </div>
-
-            <h2>
+            <div>
+                Age 65:
+                <input
+                type="number"
+                bind:value="{projected1_tax_info.Age65}"/>
+            </div>
+            <h3>
                 Witholding Taxes
-            </h2>
+            </h3>
 
             <div>
                 <label for="witholding">
@@ -186,12 +203,14 @@
             </div>
 
             <div>
-                <label for="NonTSA">
-                    Non TSA:
+                <label for="ProjTaxRefund">
+                    Proj Tax Refund:
                 </label>
                 <input
                     type="number"
-                    bind:value="{projected1_tax_info.NonTSASavings}"/>
+                    class="ProjTaxRefund"
+                    bind:value="{projected1_tax_info.ProjTaxRefund}"
+                    disabled>
             </div>
         </div>
     {/each}
@@ -211,10 +230,14 @@
         width:25%;
         text-align: center;
         float:left;
+        padding: 5px;
     }
     .border-2{
         border: 2px solid black;
         padding: 10px;
+        background: lightblue;
+        opacity: 0.9;
+        color: white;
     }
     .calculate-agi{
         width: 100%;
