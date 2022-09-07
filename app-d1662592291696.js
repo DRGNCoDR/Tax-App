@@ -824,7 +824,7 @@ var app = (function () {
     			t1 = space();
     			div1 = element("div");
 
-    			div1.innerHTML = `<iframe src="../src/PDF_Tables/tax-table/i1040tt.pdf" title="tax-table" style="
+    			div1.innerHTML = `<iframe src="src/PDF_Tables/tax-table/i1040tt.pdf" title="tax-table" style="
                 width: 90%;
                 height: 600px;
                 position: absolute;
