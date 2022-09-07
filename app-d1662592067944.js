@@ -727,7 +727,7 @@ var app = (function () {
     	const ShowTaxTable = () => {
     		FadeBackgroundItems();
     		document.getElementsByClassName("pdf-table")[0].style.display = "block";
-    		document.getElementsByClassName("tax-table-frame")[0].src = "../src/PDF_Tables/tax-table/i1040tt.pdf";
+    		document.getElementsByClassName("tax-table-frame")[0].src = "src/PDF_Tables/tax-table/i1040tt.pdf";
     	};
 
     	const ShowCCCTable = () => {
