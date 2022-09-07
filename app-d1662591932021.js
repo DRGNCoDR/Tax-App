@@ -5912,7 +5912,7 @@ var app = (function () {
     	return {
     		c() {
     			div0 = element("div");
-    			div0.innerHTML = `<img src="../src/logo/logo.png" alt="Nature" class="responsive svelte-1qrvjpk" width="50%" height="80%"/>`;
+    			div0.innerHTML = `<img src="src/logo/logo.png" alt="Nature" class="responsive svelte-1qrvjpk" width="50%" height="80%"/>`;
     			t0 = space();
     			div1 = element("div");
     			create_component(topnav.$$.fragment);
