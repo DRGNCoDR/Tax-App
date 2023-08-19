@@ -727,7 +727,7 @@ var app = (function () {
     	const ShowTaxTable = () => {
     		FadeBackgroundItems();
     		document.getElementsByClassName("pdf-table")[0].style.display = "block";
-    		document.getElementsByClassName("tax-table-frame")[0].src = "src/PDF_Tables/tax-table/i1040tt.pdf";
+    		document.getElementsByClassName("tax-table-frame")[0].src = "../src/PDF_Tables/tax-table/i1040tt.pdf";
     	};
 
     	const ShowCCCTable = () => {
@@ -824,7 +824,7 @@ var app = (function () {
     			t1 = space();
     			div1 = element("div");
 
-    			div1.innerHTML = `<iframe src="src/PDF_Tables/tax-table/i1040tt.pdf" title="tax-table" style="
+    			div1.innerHTML = `<iframe src="../src/PDF_Tables/tax-table/i1040tt.pdf" title="tax-table" style="
                 width: 90%;
                 height: 600px;
                 position: absolute;
@@ -5171,8 +5171,8 @@ var app = (function () {
 
     function add_css$2() {
     	var style = element("style");
-    	style.id = "svelte-1sjqya0-style";
-    	style.textContent = ".container.svelte-1sjqya0{border:2px solid black;background-color:gray;color:white;margin-left:343px;padding:4px}@media print{.container.svelte-1sjqya0{margin-left:1px;opacity:.9}}";
+    	style.id = "svelte-1nk0ne3-style";
+    	style.textContent = ".container.svelte-1nk0ne3{border:2px solid black;background-color:gray;color:white;margin-left:25.5%;padding:4px}@media print{.container.svelte-1nk0ne3{margin-left:1px;opacity:.9}}";
     	append(document.head, style);
     }
 
@@ -5189,7 +5189,7 @@ var app = (function () {
         <span>1:</span><input style="width:50%;"/>  <br/> 
         <span>2:</span><input style="width:50%;"/></div>`;
 
-    			attr(div2, "class", "container svelte-1sjqya0");
+    			attr(div2, "class", "container svelte-1nk0ne3");
     		},
     		m(target, anchor) {
     			insert(target, div2, anchor);
@@ -5206,7 +5206,7 @@ var app = (function () {
     class Actions_to_take extends SvelteComponent {
     	constructor(options) {
     		super();
-    		if (!document.getElementById("svelte-1sjqya0-style")) add_css$2();
+    		if (!document.getElementById("svelte-1nk0ne3-style")) add_css$2();
     		init(this, options, null, create_fragment$2, safe_not_equal, {});
     	}
     }
@@ -5912,7 +5912,7 @@ var app = (function () {
     	return {
     		c() {
     			div0 = element("div");
-    			div0.innerHTML = `<img src="src/logo/logo.png" alt="Nature" class="responsive svelte-1qrvjpk" width="50%" height="80%"/>`;
+    			div0.innerHTML = `<img src="../src/logo/logo.png" alt="Nature" class="responsive svelte-1qrvjpk" width="50%" height="80%"/>`;
     			t0 = space();
     			div1 = element("div");
     			create_component(topnav.$$.fragment);
