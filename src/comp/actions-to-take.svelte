@@ -15,7 +15,7 @@
         border: 2px solid black;
         background-color: gray;
         color: white;
-        margin-left: 343px;
+        margin-left: 25.5%;
         padding: 4px;
     }
 
